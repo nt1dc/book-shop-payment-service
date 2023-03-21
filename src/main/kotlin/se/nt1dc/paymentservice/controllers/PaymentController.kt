@@ -3,6 +3,7 @@ package se.nt1dc.paymentservice.controllers
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import se.nt1dc.paymentservice.dto.CreatePaymentOrderReq
@@ -15,7 +16,7 @@ import se.nt1dc.paymentservice.service.PaymentService
 class PaymentController(val paymentService: PaymentService) {
 
     @PostMapping("/create")
-    fun getPaymentOrderLink(createPaymentOrderReq: CreatePaymentOrderReq): CreatePaymentOrderResp {
+    fun getPaymentOrderLink(@RequestBody createPaymentOrderReq: CreatePaymentOrderReq): CreatePaymentOrderResp {
         return paymentService.createPaymentOrder(createPaymentOrderReq)
     }
 

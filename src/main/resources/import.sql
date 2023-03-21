@@ -1,0 +1,1 @@
+INSERT INTO "account" (balance, email) VALUES (0,'nt1dcare@gmail.com');

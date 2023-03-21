@@ -9,7 +9,6 @@ data class Payment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
     @ManyToOne
-    @JoinColumn(name = "account_id")
     var account: Account,
     @Enumerated(value = EnumType.STRING)
     var status: PaymentStatus

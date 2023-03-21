@@ -1,8 +1,17 @@
 server:
-  port: 0
+  #  port: 0
+  port: 8084
 spring:
   application:
     name: payment-service
+  datasource:
+    username: admin
+    password: admin
+    url: jdbc:postgresql://localhost:5432/payment-service
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
 eureka:
   client:
     service-url:
