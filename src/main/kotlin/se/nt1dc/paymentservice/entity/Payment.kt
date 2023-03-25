@@ -11,5 +11,6 @@ data class Payment(
     @ManyToOne
     var account: Account,
     @Enumerated(value = EnumType.STRING)
-    var status: PaymentStatus
+    var status: PaymentStatus,
+    var paymentAmount: Double
 )

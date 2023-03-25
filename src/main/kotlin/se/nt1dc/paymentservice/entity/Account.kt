@@ -10,6 +10,5 @@ data class Account(
     var email: String,
     var balance: Double,
     @OneToMany()
-    @JoinColumn(name = "account_id")
     var payments: MutableList<Payment>
 )

@@ -14,15 +14,19 @@ class PaymentService(val paymentRepository: PaymentRepository, val accountReposi
     fun createPaymentOrder(createPaymentOrderReq: CreatePaymentOrderReq): CreatePaymentOrderResp {
         val acc = accountRepository.findById(createPaymentOrderReq.accountId)
             .orElseThrow { RuntimeException("account not found") }
-        val payment = Payment(account = acc, status = PaymentStatus.CREATED)
-        paymentRepository.save(payment)
+        val payment =
+            Payment(account = acc, status = PaymentStatus.CREATED, paymentAmount = createPaymentOrderReq.paymentSum)
+        paymentRepository.saveAndFlush(payment)
         return CreatePaymentOrderResp(payment.id)
     }
 
     fun payPaymentOrder(paymentId: Int) {
         val payment = paymentRepository.findById(paymentId).orElseThrow { RuntimeException("payment not found") }
-        payment.status = PaymentStatus.PAYED
-        paymentRepository.save(payment)
+        if (payment.status == PaymentStatus.CREATED) {
+            payment.status = PaymentStatus.PAYED
+            payment.account.balance = payment.paymentAmount + payment.account.balance
+            paymentRepository.save(payment)
+        }
     }
 
     fun checkPaymentOrderStatus(paymentId: Int): PaymentStatus {
