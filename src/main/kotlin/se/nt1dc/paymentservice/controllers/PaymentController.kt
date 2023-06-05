@@ -1,5 +1,6 @@
 package se.nt1dc.paymentservice.controllers
 
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,6 +19,10 @@ class PaymentController(val paymentService: PaymentService) {
     @PostMapping("/create")
     fun getPaymentOrderLink(@RequestBody createPaymentOrderReq: CreatePaymentOrderReq): CreatePaymentOrderResp {
         return paymentService.createPaymentOrder(createPaymentOrderReq)
+    }
+    @DeleteMapping("/{id}")
+    fun deleteOrderById(@PathVariable id: Int) {
+        paymentService.deletePayment(id)
     }
 
     @GetMapping("/pay/{paymentId}")

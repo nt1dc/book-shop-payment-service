@@ -1,6 +1,7 @@
 package se.nt1dc.paymentservice.service
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import se.nt1dc.paymentservice.dto.CreatePaymentOrderReq
 import se.nt1dc.paymentservice.dto.CreatePaymentOrderResp
 import se.nt1dc.paymentservice.entity.Payment
@@ -9,6 +10,7 @@ import se.nt1dc.paymentservice.repository.AccountRepository
 import se.nt1dc.paymentservice.repository.PaymentRepository
 
 @Service
+@Transactional
 class PaymentService(val paymentRepository: PaymentRepository, val accountRepository: AccountRepository) {
 
     fun createPaymentOrder(createPaymentOrderReq: CreatePaymentOrderReq): CreatePaymentOrderResp {
@@ -31,5 +33,9 @@ class PaymentService(val paymentRepository: PaymentRepository, val accountReposi
 
     fun checkPaymentOrderStatus(paymentId: Int): PaymentStatus {
         return paymentRepository.findById(paymentId).orElseThrow { RuntimeException("payment not found") }.status
+    }
+
+    fun deletePayment(id: Int) {
+        paymentRepository.deleteById(id)
     }
 }
